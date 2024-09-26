@@ -13,13 +13,17 @@ SELECT ONLY ONE
 2. UPDATE
 3. DELETE
 4. POST
+
+5. ANSWER:  GET
+   EXAMPLE CODE
+   fetch('/trade_orders', { method: 'GET' })
+  .then(response => response.json())
+  .then(data => console.log(data));
    
 2. You work for a Customer Relationship Management (CRM) company. The
 company's clients gain CRM access through a RESTful API. The CRM allows
 clients to add contact information for customers, prospects, and related persons
-(e.g., virtual assistants or marketing directors). You want to choose an
-
-appropriate API request path so clients can easily retrieve information for a
+(e.g., virtual assistants or marketing directors). You want to choose an appropriate API request path so clients can easily retrieve information for a
 single contact while also being flexible for future software changes.
 Which of the following API paths should you use?
 SELECT ONLY ONE
@@ -27,6 +31,11 @@ SELECT ONLY ONE
 2. /contacts/{contact_id}
 3. /contacts/{contact_type}/all
 4. /customers/all
+   ANSWER: /contacts/{contact_id}
+   EXAMPLE CODE
+   fetch(`/contacts/${contactid}`, { method: 'GET' })
+  .then(response => response.json())
+  .then(data => console.log(data));
    
 3. You work for a large social media network, and you've been tasked witherror
 handling for the API. You're trying to decide on an appropriate errorcode for
@@ -40,7 +49,17 @@ SELECT ONLY ONE
 2. 403 if the user doesn't exist, and 401 if the password is wrong.
 3. 500 if the user doesn't exist or if the password is wrong.
 4. 401 if the user doesn't exist or if the password is wrong.
-   
+   ANSWER: 404 if the user doesn´t exisy, and 403 if the password is worng.
+   EXAMPLE CODE:
+   fetch('/login', { method: 'POST', body: JSON.stringify({ username, password }) })
+  .then(response => {
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    return response.json();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
 4. You're writing documentation for requesting information about a given user in
 your system. Your system uses UUIDS (universally unique identifiers) as user
 identifiers. In your documentation, you want to show an example.
