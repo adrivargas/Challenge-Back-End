@@ -1,5 +1,6 @@
 # Challenge-Back-End
 Prueba de Back-End a nivel junior
+Here you can found a challenge for junior back-end and the amswers with a simple example code 
 
 1. You're building a high-throughput API for a cryptocurrency trading
 platform. For this platform, time is extremely important because
@@ -15,7 +16,7 @@ SELECT ONLY ONE
 4. POST
 
 5. ANSWER:  GET
-   EXAMPLE CODE
+## EXAMPLE CODE
    fetch('/trade_orders', { method: 'GET' })
   .then(response => response.json())
   .then(data => console.log(data));
