@@ -34,11 +34,11 @@ SELECT ONLY ONE
 4. /customers/all
 5. ANSWER: /contacts/{contact_id}
    
-  ## EXAMPLE CODE
+  ## EXAMPLE CODE:
    fetch(`/contacts/${contactid}`, { method: 'GET' })
   .then(response => response.json())
   .then(data => console.log(data));
-   
+## 
 3. You work for a large social media network, and you've been tasked witherror
 handling for the API. You're trying to decide on an appropriate errorcode for
 authentication failures based on non-existent users and incorrect passwords. You
@@ -52,7 +52,7 @@ SELECT ONLY ONE
 3. 500 if the user doesn't exist or if the password is wrong.
 4. 401 if the user doesn't exist or if the password is wrong.
   5. ANSWER: 404 if the user doesn´t exisy, and 403 if the password is worng.
-  ## EXAMPLE CODE:
+## EXAMPLE CODE:
   async function loginUser(username, password) {
   try {
     const response = await fetch('/login', {
@@ -71,7 +71,7 @@ SELECT ONLY ONE
 }
      // Ejemplo de uso
     loginUser('user123', 'password123');
-
+##
 4. You're writing documentation for requesting information about a given user in
 your system. Your system uses UUIDS (universally unique identifiers) as user
 identifiers. In your documentation, you want to show an example.
@@ -100,7 +100,7 @@ async function getUserData(uuid) {
   }
 }
 getUserData(fakeUUID);
-
+##
 5. You're building code to handle errors issued from a remote API server. The
 response may or may not have an error.
 How much work should your method, handleErrors(response),
@@ -123,7 +123,7 @@ function handleErrors(response) {
   }
   return response.data;
 }
-
+##
 6. You have two classes: a database driver and an email driver. Both classes need
 to set errors so that your front-end interface displays any errors that transpire on
 your platform.
@@ -167,7 +167,7 @@ const email = new Email();
 email.send();
 
 console.log('Errores:', errorHandler.errors);
-
+##
 7. You need to name the private method in your class that handles loopingthrough
 eCommerce products to collect and parse data. That data gets stored in an array
 and set as a class property.
@@ -193,6 +193,7 @@ SELECT ONLY ONE
   parseProductData(product) {
   }
 }
+##
 8. There are multiple places in your codebase that need to access the
 database. To access the database, you need to supply credentials. You
 want to balance security with useability.
