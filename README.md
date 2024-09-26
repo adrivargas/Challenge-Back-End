@@ -38,10 +38,14 @@ SELECT ONLY ONE
 4. /customers/all
 5. ANSWER: /contacts/{contact_id}
    
-  ## EXAMPLE CODE:
-   fetch(`/contacts/${contactid}`, { method: 'GET' })
+## EXAMPLE CODE
+
+```javascript
+fetch(`/contacts/${contactid}`, { method: 'GET' })
   .then(response => response.json())
   .then(data => console.log(data));
+```
+
 ## 
 3. You work for a large social media network, and you've been tasked witherror
 handling for the API. You're trying to decide on an appropriate errorcode for
@@ -56,8 +60,10 @@ SELECT ONLY ONE
 3. 500 if the user doesn't exist or if the password is wrong.
 4. 401 if the user doesn't exist or if the password is wrong.
   5. ANSWER: 404 if the user doesn´t exisy, and 403 if the password is worng.
-## EXAMPLE CODE:
-  async function loginUser(username, password) {
+## EXAMPLE CODE
+
+```javascript
+async function loginUser(username, password) {
   try {
     const response = await fetch('/login', {
       method: 'POST',
@@ -69,12 +75,15 @@ SELECT ONLY ONE
     }
     const data = await response.json();
     console.log('Login successful:', data.token);
-    } catch (error) {
+  } catch (error) {
     console.error('Error:', error.message);
   }
 }
-     // Ejemplo de uso
-    loginUser('user123', 'password123');
+
+// Example usage
+loginUser('user123', 'password123');
+```
+
 ##
 4. You're writing documentation for requesting information about a given user in
 your system. Your system uses UUIDS (universally unique identifiers) as user
@@ -86,7 +95,9 @@ SELECT ONLY ONE
 2. FALSE
 3.ANSWER: TRUE
 
-##EXAMPLE CODE 
+## EXAMPLE CODE
+
+```javascript
 const fakeUUID = '123e4567-e89b-12d3-a456-426614174000';
 
 async function getUserData(uuid) {
@@ -103,7 +114,10 @@ async function getUserData(uuid) {
     console.error('Error fetching user data:', error.message);
   }
 }
+
 getUserData(fakeUUID);
+```
+
 ##
 5. You're building code to handle errors issued from a remote API server. The
 response may or may not have an error.
@@ -120,13 +134,17 @@ then throw an exception.
 4. ANSWER: Check for the presence of an error. If it exists, set a class property to the error,
 then throw an exception.
 
-##EXAMPLE CODE:
+## EXAMPLE CODE
+
+```javascript
 function handleErrors(response) {
   if (response.error) {
     throw new Error(response.error);
   }
   return response.data;
 }
+``` 
+
 ##
 6. You have two classes: a database driver and an email driver. Both classes need
 to set errors so that your front-end interface displays any errors that transpire on
@@ -139,7 +157,9 @@ code.
 3. Make a driver-based error provider to handle errors in all classes that can issue
 errors.
 4. ANSWER:  Make a trait to handle errors so it'll collect errors in any class that uses it.
-##EXAMPLE CODE:
+## EXAMPLE CODE
+
+```javascript
 // Manejador de errores simple
 const errorHandler = {
   errors: [],
@@ -171,6 +191,8 @@ const email = new Email();
 email.send();
 
 console.log('Errores:', errorHandler.errors);
+```
+
 ##
 7. You need to name the private method in your class that handles loopingthrough
 eCommerce products to collect and parse data. That data gets stored in an array
@@ -182,8 +204,10 @@ SELECT ONLY ONE
 3. parseDataForProducts()
 4. parseDataForProductsAndSetArray()
 5. ANSWER: parseDataForProducts()
-   ##EXAMPLE CODE
-   class ProductParser {
+  ## EXAMPLE CODE
+
+```javascript
+class ProductParser {
   constructor() {
     this.productData = [];
   }
@@ -197,6 +221,8 @@ SELECT ONLY ONE
   parseProductData(product) {
   }
 }
+```
+
 ##
 8. There are multiple places in your codebase that need to access the
 database. To access the database, you need to supply credentials. You
@@ -214,8 +240,9 @@ request the credentials from a database service provider.
 
 5. ANSWER: Put them in a .env file, load data from it into a configuration system, then
 request the credentials from a database service provider.
-##EXAMPLE CODE
+## EXAMPLE CODE
 
+```javascript
 // .env file
 DB_HOST=localhost
 DB_USERNAME=myuser
@@ -257,4 +284,6 @@ class DatabaseServiceProvider {
     console.error('Connection failed:', error);
   }
 })();
+```
+
 
