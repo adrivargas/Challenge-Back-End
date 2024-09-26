@@ -32,8 +32,9 @@ SELECT ONLY ONE
 2. /contacts/{contact_id}
 3. /contacts/{contact_type}/all
 4. /customers/all
-   ANSWER: /contacts/{contact_id}
-   EXAMPLE CODE
+5. ANSWER: /contacts/{contact_id}
+   
+  ## EXAMPLE CODE
    fetch(`/contacts/${contactid}`, { method: 'GET' })
   .then(response => response.json())
   .then(data => console.log(data));
@@ -50,17 +51,27 @@ SELECT ONLY ONE
 2. 403 if the user doesn't exist, and 401 if the password is wrong.
 3. 500 if the user doesn't exist or if the password is wrong.
 4. 401 if the user doesn't exist or if the password is wrong.
-   ANSWER: 404 if the user doesn´t exisy, and 403 if the password is worng.
-   EXAMPLE CODE:
-   fetch('/login', { method: 'POST', body: JSON.stringify({ username, password }) })
-  .then(response => {
-    if (response.status === 401) {
-      throw new Error('Unauthorized');
+  5. ANSWER: 404 if the user doesn´t exisy, and 403 if the password is worng.
+  ## EXAMPLE CODE:
+  async function loginUser(username, password) {
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    if (!response.ok) {
+      throw new Error(response.status === 401 ? 'Unauthorized' : 'Login failed');
     }
-    return response.json();
-  })
-  .then(data => console.log(data))
-  .catch(error => console.error(error));
+    const data = await response.json();
+    console.log('Login successful:', data.token);
+    } catch (error) {
+    console.error('Error:', error.message);
+  }
+}
+     // Ejemplo de uso
+    loginUser('user123', 'password123');
+
 4. You're writing documentation for requesting information about a given user in
 your system. Your system uses UUIDS (universally unique identifiers) as user
 identifiers. In your documentation, you want to show an example.
@@ -69,6 +80,26 @@ text "UUID") as a placeholder.
 SELECT ONLY ONE
 1. TRUE
 2. FALSE
+3.ANSWER: TRUE
+
+##EXAMPLE CODE 
+const fakeUUID = '123e4567-e89b-12d3-a456-426614174000';
+
+async function getUserData(uuid) {
+  try {
+    const response = await fetch(`/api/users/${uuid}`, {
+      method: 'GET',
+    });
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: Unable to fetch user data`);
+    }
+    const data = await response.json();
+    console.log('User data:', data);
+  } catch (error) {
+    console.error('Error fetching user data:', error.message);
+  }
+}
+getUserData(fakeUUID);
 
 5. You're building code to handle errors issued from a remote API server. The
 response may or may not have an error.
@@ -82,6 +113,17 @@ error.
 3. Check for the presence of an error. If it exists, set a class property to the error,
 then throw an exception.
 
+4. ANSWER: Check for the presence of an error. If it exists, set a class property to the error,
+then throw an exception.
+
+##EXAMPLE CODE:
+function handleErrors(response) {
+  if (response.error) {
+    throw new Error(response.error);
+  }
+  return response.data;
+}
+
 6. You have two classes: a database driver and an email driver. Both classes need
 to set errors so that your front-end interface displays any errors that transpire on
 your platform.
@@ -92,6 +134,39 @@ code.
 2. Make a trait to handle errors so it'll collect errors in any class that uses it.
 3. Make a driver-based error provider to handle errors in all classes that can issue
 errors.
+4. ANSWER:  Make a trait to handle errors so it'll collect errors in any class that uses it.
+##EXAMPLE CODE:
+// Manejador de errores simple
+const errorHandler = {
+  errors: [],
+  log(error) {
+    this.errors.push(error);
+    console.error(`Error: ${error}`);
+  }
+};
+
+// Clase de base de datos con manejo de errores
+class Database {
+  connect() {
+    errorHandler.log('Failed to connect to the database');
+  }
+}
+
+// Clase de email con manejo de errores
+class Email {
+  send() {
+    errorHandler.log('Failed to send email');
+  }
+}
+
+// Uso
+const db = new Database();
+db.connect();
+
+const email = new Email();
+email.send();
+
+console.log('Errores:', errorHandler.errors);
 
 7. You need to name the private method in your class that handles loopingthrough
 eCommerce products to collect and parse data. That data gets stored in an array
@@ -102,7 +177,22 @@ SELECT ONLY ONE
 2. loopProductsAndParse()
 3. parseDataForProducts()
 4. parseDataForProductsAndSetArray()
-   
+5. ANSWER: parseDataForProducts()
+   ##EXAMPLE CODE
+   class ProductParser {
+  constructor() {
+    this.productData = [];
+  }
+
+  loopThroughProductsAndParseData() {
+    this.products.forEach(product => {
+      this.productData.push(this.parseProductData(product));
+    });
+  }
+
+  parseProductData(product) {
+  }
+}
 8. There are multiple places in your codebase that need to access the
 database. To access the database, you need to supply credentials. You
 want to balance security with useability.
@@ -116,3 +206,50 @@ that needs to access the database.
 service provider.
 4. Put them in a .env file, load data from it into a configuration system, then
 request the credentials from a database service provider.
+
+5. ANSWER: Put them in a .env file, load data from it into a configuration system, then
+request the credentials from a database service provider.
+##EXAMPLE CODE
+
+// .env file
+DB_HOST=localhost
+DB_USERNAME=myuser
+DB_PASSWORD=mypassword
+
+const config = {
+  database: {
+    host: process.env.DB_HOST,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+  },
+};
+
+// Simulation of a database client (replace this with the real client)
+const mockDatabaseClient = {
+  connect: async () => console.log('Conexión establecida'),
+};
+
+// Database service provider
+class DatabaseServiceProvider {
+  async getConnection() {
+    const { host, username, password } = config.database;
+    try {
+      await mockDatabaseClient.connect();
+      console.log(`Connected to database on ${host} with user ${username}`);
+    } catch (error) {
+      console.error('Error connecting to database:', error);
+      throw new Error('Could not establish database connection');
+    }
+  }
+}
+
+// Example of use
+(async () => {
+  const dbService = new DatabaseServiceProvider();
+  try {
+    await dbService.getConnection();
+  } catch (error) {
+    console.error('Connection failed:', error);
+  }
+})();
+
