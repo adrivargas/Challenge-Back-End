@@ -17,9 +17,13 @@ SELECT ONLY ONE
 
 5. ANSWER:  GET
 ## EXAMPLE CODE
-   fetch('/trade_orders', { method: 'GET' })
+
+```javascript
+fetch('/trade_orders', { method: 'GET' })
   .then(response => response.json())
   .then(data => console.log(data));
+```
+
 ##
 2. You work for a Customer Relationship Management (CRM) company. The
 company's clients gain CRM access through a RESTful API. The CRM allows
